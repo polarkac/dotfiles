@@ -64,9 +64,6 @@ Plugin 'kien/ctrlp.vim'
 " Autocompletion in insert mode
 Plugin 'ervandew/supertab'
 
-" Completion, better indention etc for python scripts
-Plugin 'klen/python-mode'
-
 call vundle#end()
 
 " No code folding
