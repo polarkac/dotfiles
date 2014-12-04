@@ -1,3 +1,5 @@
+set nocompatible
+
 " Automatic reloading of .vimrc
 autocmd! bufwritepost .vimrc source %
 
@@ -16,8 +18,6 @@ vnoremap <Leader>s :sort<CR>
 " Better indenting of code block
 vnoremap < <gv
 vnoremap > >gv
-
-set nocompatible
 
 " Enable syntax highlighting
 filetype off
