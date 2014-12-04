@@ -25,7 +25,7 @@ filetype plugin indent on
 syntax on
 
 " Set runtimepath for Vundle and initialiaze it
-set rtp+=~/.vim/bundle/vundle
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Vundle can manage itself
