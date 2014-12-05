@@ -102,19 +102,15 @@ let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_python_flake8_args = '--ignore=E302 --max-line-length=85'
 
 " Move line up
-nnoremap k :m .-2<CR>==
-inoremap k <Esc>:m .-2<CR>==gi
+nnoremap m :m .-2<CR>==
+inoremap m <Esc>:m .-2<CR>==gi
 " Move block up
-vnoremap k :m '<-2<CR>gv=gv
+vnoremap m :m '<-2<CR>gv=gv
 " Move line down
-nnoremap j :m .+1<CR>==
-inoremap j <Esc>:m .+1<CR>==gi
+nnoremap n :m .+1<CR>==
+inoremap n <Esc>:m .+1<CR>==gi
 " Move block down
-vnoremap j :m '>+1<CR>gv=gv
-" Hack to switch from insert to normal mode in instant (10ms)
-" If this is not set, <Esc>j or <Esc>k will act same as mapping above
-set ttimeoutlen=10
-set timeoutlen=10
+vnoremap n :m '>+1<CR>gv=gv
 
 " Make files should use tabs instead of spaces
 autocmd FileType make setlocal noexpandtab
