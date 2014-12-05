@@ -64,10 +64,19 @@ Plugin 'kien/ctrlp.vim'
 " Autocompletion in insert mode
 Plugin 'ervandew/supertab'
 
+" Python mode plugin for better indention, autocomplete etc
+Plugin 'klen/python-mode'
+
 call vundle#end()
 
-" No code folding
-set nofoldenable
+" Turn off code folding from python-mode
+let g:pymode_folding = 0
+" Turn off python-mode breakpoints
+let g:pymode_breakpoint = 0
+" Turn off python-mode code checking (I am using syntastic)
+let g:pymode_lint = 0
+" Turn off python-mode rope
+let g:pymode_rope = 0
 
 " Set colorscheme to molokai
 colorscheme molokai
@@ -120,6 +129,7 @@ autocmd InsertLeave * set number relativenumber
 
 " Set dark background
 set background=dark
+
 " Set tab to result in 4 spaces
 set tabstop=4
 set shiftwidth=4
