@@ -1,0 +1,60 @@
+# History file and size
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+
+# Set key binding to vim-like
+bindkey -v
+
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '~/.zshrc'
+zstyle ':completion:*' menu select
+setopt completealiases
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+# Bind home key
+bindkey '^[[H' beginning-of-line
+# Bind end key
+bindkey '^[[F' end-of-line
+# Bind delete key
+bindkey '^[[3~' delete-char
+# Bind page up key
+bindkey '^[[5~' beginning-of-buffer-or-history
+# Bind page down key
+bindkey '^[[6~' end-of-buffer-or-history
+# Bind Ctrl + R shortcut
+bindkey '^R' history-incremental-search-backward
+
+# Turn on colors
+autoload -U colors && colors
+
+# Set up a custom prompt with right prompt
+# This is used only if Powerline is not
+PROMPT="[%{$fg[green]%}%n@%m %1~%{$reset_color%}]%# "
+RPROMPT="[%?]"
+
+# 10ms for key sequence
+KEYTIMEOUT=1
+
+# Set virtual env for python
+export VIRTUALENVWRAPPER_PYTHON='/usr/bin/python'
+export WORKON_HOME='~/Development/Python_environments/'
+source /usr/bin/virtualenvwrapper.sh
+
+# Set fish like syntax highligthing
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Aliases
+alias ls='ls --color=auto -l'
+
+# Setup correct terminal inside tmux
+export TERM=xterm-256color
+if [[ -n "$TMUX" ]]; then
+    export TERM=screen-256color
+fi
+
+# Set Powerline
+source ~/.local/lib/python3.4/site-packages/powerline/bindings/zsh/powerline.zsh
