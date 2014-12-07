@@ -1,0 +1,12 @@
+[core]
+	editor = vim
+[push]
+	default = simple
+[diff]
+    tool = vimdiff
+    noprefix = true
+    renames = copies
+[alias]
+	st = status --short --branch
+	lol = log --all --graph --decorate --oneline --abbrev-commit
+    diffc = diff --cached
