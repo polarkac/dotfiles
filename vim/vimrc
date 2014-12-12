@@ -161,6 +161,10 @@ set undoreload=10000
 " Highlight matched parentheses with light blue background
 highlight MatchParen ctermbg=LightBlue
 
+" Highlight trailing whitespaces
+highlight ExtraWhitespace ctermbg=red
+match ExtraWhitespace /\s\+$/
+
 " Set local Python path for Powerline
 let $PYTHONPATH='~/.local/lib/python3.4/site-packages'
 " Initialize Powerline
