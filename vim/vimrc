@@ -20,9 +20,10 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Enable syntax highlighting
-filetype off
-filetype plugin indent on
 syntax on
+
+" Turn off filetype detection
+filetype off
 
 " Set runtimepath for Vundle and initialiaze it
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -69,6 +70,9 @@ Plugin 'klen/python-mode'
 
 call vundle#end()
 
+" Turn on filetype plugin detection
+filetype plugin on
+
 " Turn off code folding from python-mode
 let g:pymode_folding = 0
 " Turn off python-mode breakpoints
@@ -82,7 +86,7 @@ let g:pymode_rope = 0
 colorscheme molokai
 
 " NERDTree should ignore Python binary files
-let NERDTreeIgnore = ['\.pyc$'] 
+let NERDTreeIgnore = ['\.pyc$']
 " Map Ctrl + x to open NERDTree file explorer
 nnoremap <C-x> :NERDTreeToggle<CR>
 inoremap <C-x> <Esc>:NERDTreeToggle<CR>
