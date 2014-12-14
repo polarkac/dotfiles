@@ -1,7 +1,8 @@
 set nocompatible
 
-" Automatic reloading of .vimrc
+" Automatic reloading of .vimrc or vimrc
 autocmd! bufwritepost .vimrc source %
+autocmd! bufwritepost vimrc source ~/.vimrc
 
 " Set mapleader to comma
 let mapleader = ','
@@ -67,6 +68,9 @@ Plugin 'ervandew/supertab'
 
 " Python mode plugin for better indention, autocomplete etc
 Plugin 'klen/python-mode'
+
+" Control Git inside of Vim
+Plugin 'tpope/vim-fugitive'
 
 call vundle#end()
 
