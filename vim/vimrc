@@ -108,6 +108,8 @@ let g:ctrlp_custom_ignore = {
 let g:syntastic_python_checkers = ['python', 'flake8']
 " Ignore some conventions and set line length to 85
 let g:syntastic_python_flake8_args = '--ignore=E302 --max-line-length=85'
+" Turn on header checking for C++
+let g:syntastic_cpp_check_header = 1
 
 " Move line up
 nnoremap m :m .-2<CR>==
