@@ -162,6 +162,12 @@ set wildmenu
 " Show vertical line on 85 column
 set colorcolumn=85
 
+" Show incomplete command ("+y)
+set showcmd
+
+" 'h' and 'l' move to next line when hit wrap
+set whichwrap=<,>,h,l
+
 " Persistent undo, it remember changes after file is closed
 set undofile
 set undodir=~/.vim/undo
@@ -174,6 +180,9 @@ highlight MatchParen ctermbg=LightBlue
 " Highlight trailing whitespaces
 highlight ExtraWhitespace ctermbg=red
 match ExtraWhitespace /\s\+$/
+" Also put dot as trailing whitespace
+set list
+set listchars=trail:·
 
 " Set local Python path for Powerline
 let $PYTHONPATH='~/.local/lib/python3.4/site-packages'
