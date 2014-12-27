@@ -184,9 +184,11 @@ match ExtraWhitespace /\s\+$/
 set list
 set listchars=trail:·
 
-" Set local Python path for Powerline
-let $PYTHONPATH='~/.local/lib/python3.4/site-packages'
-" Initialize Powerline
-python3 from powerline.vim import setup as powerline_setup
-python3 powerline_setup()
-python3 del powerline_setup
+if !exists("dont_use_powerline")
+    " Set local Python path for Powerline
+    let $PYTHONPATH='~/.local/lib/python3.4/site-packages'
+    " Initialize Powerline
+    python3 from powerline.vim import setup as powerline_setup
+    python3 powerline_setup()
+    python3 del powerline_setup
+endif
