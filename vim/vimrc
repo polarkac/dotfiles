@@ -203,3 +203,6 @@ set listchars=trail:·,tab:>-
 
 " Set backspace behavior
 set backspace=indent,eol,start
+
+" Equal sizes of splits when window resize
+au VimResized * :wincmd =
