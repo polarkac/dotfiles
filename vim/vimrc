@@ -31,56 +31,51 @@ syntax on
 " Turn off filetype detection
 filetype off
 
-" Set runtimepath for Vundle and initialiaze it
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" Vundle can manage itself
-Plugin 'gmarik/Vundle.vim'
+call plug#begin('~/.nvim/plugged')
 
 " Library needed by some plugins
-Plugin 'L9'
+Plug 'L9'
 
 " Molokai colorscheme
-Plugin 'tomasr/molokai'
+Plug 'tomasr/molokai'
 
 " Quick navigation for files/folders in current folder
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 
 " Quick switching between source and header file
-Plugin 'a.vim'
+Plug 'a.vim'
 
 " Quick (un)comment line(s)
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 
 " Check source code syntax
-Plugin 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 
 " Easy managing for snippets
-Plugin 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 
 " Autocompletion for quotes, parentheses etc
-Plugin 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 
 " Groovy syntax for .gradle files
-Plugin 'tfnico/vim-gradle'
+Plug 'tfnico/vim-gradle'
 
 " Fuzzy finder for files and buffers
-Plugin 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim'
 
 " Autocompletion in insert mode
-Plugin 'ervandew/supertab'
+Plug 'ervandew/supertab'
 
 " Python mode plugin for better indention, autocomplete etc
-Plugin 'klen/python-mode'
+Plug 'klen/python-mode'
 
 " Control Git inside of Vim
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 " Sexy status bar like powerline
-Plugin 'bling/vim-airline'
+Plug 'bling/vim-airline'
 
-call vundle#end()
+call plug#end()
 
 " Turn on filetype plugin detection and indent files
 filetype plugin indent on
