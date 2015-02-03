@@ -85,6 +85,9 @@ Plugin 'klen/python-mode'
 " Control Git inside of Vim
 Plugin 'tpope/vim-fugitive'
 
+" Sexy status bar like powerline
+Plugin 'bling/vim-airline'
+
 call vundle#end()
 
 " Turn on filetype plugin detection
@@ -123,6 +126,11 @@ let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_python_flake8_args = '--ignore=E302 --max-line-length=85'
 " Turn on header checking for C++
 let g:syntastic_cpp_check_header = 1
+
+" Turn on powerline fonts for airline
+let g:airline_powerline_fonts = 1
+" Set theme for airline
+let g:airline_theme = 'powerlineish'
 
 " Move line up
 nnoremap m :m .-2<CR>==
@@ -196,12 +204,3 @@ match ExtraWhitespace /\s\+$/
 " Also put dot as trailing whitespace
 set list
 set listchars=trail:·
-
-if !exists("dont_use_powerline")
-    " Set local Python path for Powerline
-    let $PYTHONPATH='~/.local/lib/python3.4/site-packages'
-    " Initialize Powerline
-    python3 from powerline.vim import setup as powerline_setup
-    python3 powerline_setup()
-    python3 del powerline_setup
-endif
