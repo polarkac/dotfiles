@@ -17,8 +17,10 @@ compinit
 
 # Bind home key
 bindkey '^[[H' beginning-of-line
+bindkey '^[[1~' beginning-of-line
 # Bind end key
 bindkey '^[[F' end-of-line
+bindkey '^[[4~' end-of-line
 # Bind delete key
 bindkey '^[[3~' delete-char
 # Bind page up key
