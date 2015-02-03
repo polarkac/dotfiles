@@ -1,10 +1,5 @@
 set nocompatible
 
-" Setup Python for Neovim
-if has('nvim')
-    runtime! python_setup.vim
-endif
-
 " Automatic reloading of .vimrc or vimrc
 autocmd! bufwritepost .vimrc source %
 " Automatic reloading of .nvimrc or .vimrc
@@ -205,3 +200,6 @@ match ExtraWhitespace /\s\+$/
 " Show tab character as >-
 set list
 set listchars=trail:·,tab:>-
+
+" Set backspace behavior
+set backspace=indent,eol,start
