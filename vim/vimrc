@@ -1,8 +1,21 @@
 set nocompatible
 
+" Setup Python for Neovim
+if has('nvim')
+    runtime! python_setup.vim
+endif
+
 " Automatic reloading of .vimrc or vimrc
 autocmd! bufwritepost .vimrc source %
-autocmd! bufwritepost vimrc source ~/.vimrc
+" Automatic reloading of .nvimrc or .vimrc
+" depending on if Neovim or Vim is running
+if has('nvim')
+    autocmd! bufwritepost vimrc source ~/.nvimrc
+else
+    autocmd! bufwritepost vimrc source ~/.vimrc
+endif
+" Automatic reloading of .nvimrc
+autocmd! bufwritepost .nvimrc source %
 
 " Set mapleader to comma
 let mapleader = ','
