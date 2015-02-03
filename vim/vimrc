@@ -1,15 +1,12 @@
 set nocompatible
 
-" Automatic reloading of .vimrc or vimrc
-autocmd! bufwritepost .vimrc source %
-" Automatic reloading of .nvimrc or .vimrc
-" depending on if Neovim or Vim is running
-if has('nvim')
-    autocmd! bufwritepost vimrc source ~/.nvimrc
-else
-    autocmd! bufwritepost vimrc source ~/.vimrc
+if !has('nvim')
+    echo "You have to use Neovim"
+    exit
 endif
+
 " Automatic reloading of .nvimrc
+autocmd! bufwritepost vimrc source ~/.nvimrc
 autocmd! bufwritepost .nvimrc source %
 
 " Set mapleader to comma
