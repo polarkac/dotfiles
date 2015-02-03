@@ -90,8 +90,8 @@ Plugin 'bling/vim-airline'
 
 call vundle#end()
 
-" Turn on filetype plugin detection
-filetype plugin on
+" Turn on filetype plugin detection and indent files
+filetype plugin indent on
 
 " Turn off code folding from python-mode
 let g:pymode_folding = 0
@@ -167,7 +167,7 @@ set smartindent
 
 " Ignores case
 set ignorecase
-set smartcase
+
 " Highlight searched word
 set incsearch
 
@@ -201,6 +201,7 @@ highlight MatchParen ctermbg=LightBlue
 " Highlight trailing whitespaces
 highlight ExtraWhitespace ctermbg=red
 match ExtraWhitespace /\s\+$/
-" Also put dot as trailing whitespace
+" Show trailing whitespace as dot
+" Show tab character as >-
 set list
-set listchars=trail:·
+set listchars=trail:·,tab:>-
