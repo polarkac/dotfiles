@@ -103,7 +103,7 @@ let g:UltiSnipsEditSplit = 'vertical'
 
 " Ctrlp should ignore some hidden folders and binary/temp files
 let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+            \ 'dir':  '\v[\/\.](git|hg|svn)$',
             \ 'file': '\v\.(pyc|swp|so|class)$',
             \ }
 
@@ -118,17 +118,6 @@ let g:syntastic_cpp_check_header = 1
 let g:airline_powerline_fonts = 1
 " Set theme for airline
 let g:airline_theme = 'powerlineish'
-
-" Move line up
-nnoremap m :m .-2<CR>==
-inoremap m <Esc>:m .-2<CR>==gi
-" Move block up
-vnoremap m :m '<-2<CR>gv=gv
-" Move line down
-nnoremap n :m .+1<CR>==
-inoremap n <Esc>:m .+1<CR>==gi
-" Move block down
-vnoremap n :m '>+1<CR>gv=gv
 
 " Make files should use tabs instead of spaces
 autocmd FileType make setlocal noexpandtab
@@ -183,11 +172,11 @@ set undolevels=1000
 set undoreload=10000
 
 " Highlight matched parentheses with light blue background
-highlight MatchParen ctermbg=LightBlue
+highlight MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
 " Highlight trailing whitespaces
 highlight ExtraWhitespace ctermbg=red
-match ExtraWhitespace /\s\+$/
+au BufWinEnter * match ExtraWhitespace /\s\+$/
 " Show trailing whitespace as dot
 " Show tab character as >-
 set list
