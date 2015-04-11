@@ -118,6 +118,9 @@ let g:syntastic_cpp_check_header = 1
 let g:airline_powerline_fonts = 1
 " Set theme for airline
 let g:airline_theme = 'powerlineish'
+" Display all buffers
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 
 " Make files should use tabs instead of spaces
 autocmd FileType make setlocal noexpandtab
