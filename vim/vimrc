@@ -168,6 +168,21 @@ set showcmd
 " 'h' and 'l' move to next line when hit wrap
 set whichwrap=<,>,h,l
 
+" Wrap long line based on 'breakat' instead of last character tha fit
+set linebreak
+
+" Automatic set terminal title
+set title
+
+" Highlight current cursor line
+set cursorline
+
+" Keep 10 lines above or below when scroll
+set scrolloff=10
+
+" Keep 10 lines left or right when scroll
+set sidescrolloff=10
+
 " Persistent undo, it remember changes after file is closed
 set undofile
 set undodir=~/.vim/undo
