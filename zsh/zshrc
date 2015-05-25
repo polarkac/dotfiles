@@ -58,5 +58,13 @@ if [[ -n "$TMUX" ]]; then
     export TERM=screen-256color
 fi
 
-# Set Powerline
-source ~/.local/lib/python3.4/site-packages/powerline/bindings/zsh/powerline.zsh
+# Use Neovim as text editor of choice
+export EDITOR=nvim
+
+# User powerline only outside of Midnigh Commander
+if ps $PPID | grep mc; then
+    PROMPT="[%{$fg[green]%}%n@%m %1~%{$reset_color%}]%# "
+    RPROMPT=""
+else
+    source ~/.local/lib/python3.4/site-packages/powerline/bindings/zsh/powerline.zsh
+fi
