@@ -10,6 +10,10 @@
     prompt = True
 [difftool "nvimdiff"]
     cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[merge]
+    tool = vimdiff
+[mergetool "vimdiff"]
+    path = nvim
 [alias]
     st = status --short --branch
     lol = log --all --graph --decorate --oneline --abbrev-commit
