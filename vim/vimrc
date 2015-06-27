@@ -101,7 +101,7 @@ let g:UltiSnipsExpandTrigger = '<C-y>'
 
 " Ctrlp should ignore some hidden folders and binary/temp files
 let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/\.](git|hg|svn)$',
+            \ 'dir':  '\v[\/\.](git|hg|svn|build)$',
             \ 'file': '\v\.(pyc|swp|so|class)$',
             \ }
 
@@ -111,6 +111,8 @@ let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_python_flake8_args = '--ignore=E302 --max-line-length=85'
 " Turn on header checking for C++
 let g:syntastic_cpp_check_header = 1
+" Turn on java configuration file for classpath
+let g:syntastic_java_javac_config_file_enabled=1
 
 " Turn on powerline fonts for airline
 let g:airline_powerline_fonts = 1
@@ -184,7 +186,7 @@ set cursorline
 set scrolloff=10
 
 " Keep 10 lines left or right when scroll
-set sidescrolloff=10
+set sidescrolloff=1
 
 " Persistent undo, it remember changes after file is closed
 set undofile
