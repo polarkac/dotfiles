@@ -63,14 +63,8 @@ Plug 'tfnico/vim-gradle'
 " Fuzzy finder for files and buffers
 Plug 'kien/ctrlp.vim'
 
-" Autocompletion in insert mode
-Plug 'ervandew/supertab'
-
 " Python mode plugin for better indention, autocomplete etc
 Plug 'klen/python-mode'
-
-" Control Git inside of Vim
-Plug 'tpope/vim-fugitive'
 
 " Sexy status bar like powerline
 Plug 'bling/vim-airline'
