@@ -97,6 +97,7 @@ inoremap <C-x> <Esc>:NERDTreeToggle<CR>
 
 " Vertical split for UltiSnips edit window
 let g:UltiSnipsEditSplit = 'vertical'
+let g:UltiSnipsExpandTrigger = '<C-y>'
 
 " Ctrlp should ignore some hidden folders and binary/temp files
 let g:ctrlp_custom_ignore = {
