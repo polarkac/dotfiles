@@ -210,3 +210,6 @@ set backspace=indent,eol,start
 
 " Equal sizes of splits when window resize
 au VimResized * :wincmd =
+
+" Disable mouse
+set mouse=
