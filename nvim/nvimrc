@@ -1,22 +1,17 @@
 set nocompatible
 
-if !has('nvim')
-    echo "You have to use Neovim"
-    exit
-endif
-
 " Automatic reloading of .nvimrc
-autocmd! bufwritepost vimrc source ~/.nvimrc
-autocmd! bufwritepost .nvimrc source %
+autocmd! bufwritepost nvimrc source %
 
 " Set mapleader to comma
 let mapleader = ','
+let g:mapleader = ','
 
 " Bind Ctrl + [h,j,k,l] for quick window movement
-map <c-h> <c-w>h
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
+noremap <c-h> <c-w>h
+noremap <c-j> <c-w>j
+noremap <c-k> <c-w>k
+noremap <c-l> <c-w>l
 
 " Easy sorting of selected lines
 vnoremap <Leader>s :sort<CR>
@@ -69,8 +64,8 @@ Plug 'klen/python-mode'
 " Sexy status bar like powerline
 Plug 'bling/vim-airline'
 
-" Autocompletion
-Plug 'Valloric/YouCompleteMe', {'do': './install.sh'}
+" Git managment inside Neovim
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
@@ -91,13 +86,16 @@ colorscheme molokai
 
 " NERDTree should ignore Python binary files
 let NERDTreeIgnore = ['\.pyc$']
+" Close NERDTree after file is opened
+let g:NERDTreeQuitOnOpen=1
+" Show hidden files
+let NERDTreeShowHidden=1
 " Map Ctrl + x to open NERDTree file explorer
-nnoremap <C-x> :NERDTreeToggle<CR>
-inoremap <C-x> <Esc>:NERDTreeToggle<CR>
+nnoremap <Leader>x :NERDTreeToggle<CR>
+inoremap <Leader>x <Esc>:NERDTreeToggle<CR>
 
 " Vertical split for UltiSnips edit window
 let g:UltiSnipsEditSplit = 'vertical'
-let g:UltiSnipsExpandTrigger = '<C-y>'
 
 " Ctrlp should ignore some hidden folders and binary/temp files
 let g:ctrlp_custom_ignore = {
@@ -126,6 +124,12 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 " Close preview window from YouCompleteMe after leaving insert mode
 let g:ycm_autoclose_preview_window_after_insertion = 1
+
+" Fugitive mapping
+nmap <silent> <leader>gs :Gstatus<cr>
+nmap <leader>ge :Gedit<cr>
+nmap <silent> <leader>gr :Gread<cr>
+nmap <silent> <leader>gb :Gblame<cr>
 
 " Make files should use tabs instead of spaces
 autocmd FileType make setlocal noexpandtab
@@ -173,7 +177,7 @@ set showcmd
 " 'h' and 'l' move to next line when hit wrap
 set whichwrap=<,>,h,l
 
-" Wrap long line based on 'breakat' instead of last character tha fit
+" Wrap long line based on 'breakat' instead of last character that fit
 set linebreak
 
 " Automatic set terminal title
@@ -185,7 +189,7 @@ set cursorline
 " Keep 10 lines above or below when scroll
 set scrolloff=10
 
-" Keep 10 lines left or right when scroll
+" Keep 1 line left or right when scroll
 set sidescrolloff=1
 
 " Persistent undo, it remember changes after file is closed
@@ -193,6 +197,10 @@ set undofile
 set undodir=~/.vim/undo
 set undolevels=1000
 set undoreload=10000
+
+" Set up directory for swap and backup files
+set backupdir=~/.nvim-tmp,/tmp
+set directory=~/.nvim-tmp,/tmp
 
 " Highlight matched parentheses with light blue background
 highlight MatchParen cterm=bold ctermbg=none ctermfg=magenta
@@ -213,3 +221,16 @@ au VimResized * :wincmd =
 
 " Disable mouse
 set mouse=
+
+nmap <Leader>md :!markdown %<cr>
+nmap <Leader><space> :%s/\s\+$<cr>
+
+" Scroll faster
+nnoremap <c-e> 5<c-e>
+nnoremap <c-y> 5<c-y>
+
+" Better movement for long wrapped lines
+nnoremap j gj
+nnoremap k gk
+nnoremap ^ g^
+nnoremap $ g$
