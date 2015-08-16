@@ -120,16 +120,12 @@ let g:airline_theme = 'powerlineish'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
-" Close preview window from YouCompleteMe after completion
-let g:ycm_autoclose_preview_window_after_completion = 1
-" Close preview window from YouCompleteMe after leaving insert mode
-let g:ycm_autoclose_preview_window_after_insertion = 1
-
 " Fugitive mapping
 nmap <silent> <leader>gs :Gstatus<cr>
-nmap <leader>ge :Gedit<cr>
-nmap <silent> <leader>gr :Gread<cr>
 nmap <silent> <leader>gb :Gblame<cr>
+nmap <silent> <leader>gd :Gdiff<cr>
+nmap <silent> <leader>gc :Gcommit<cr>
+nmap <silent> <leader>gw :Gwrite<cr>
 
 " Make files should use tabs instead of spaces
 autocmd FileType make setlocal noexpandtab
