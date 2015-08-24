@@ -230,3 +230,6 @@ nnoremap j gj
 nnoremap k gk
 nnoremap ^ g^
 nnoremap $ g$
+
+" Map double Escape to switch from terminal to normal mode
+tnoremap <esc><esc> <c-\><c-n>
