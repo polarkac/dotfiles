@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ -z $1 ] || [ ! -f $1 ]; then
+    echo "File does not exist!"
+    exit 1
+fi
+
+filename=$(basename $1)
+cp $1 ~/Dropbox/Public/
+dropbox-cli puburl ~/Dropbox/Public/$filename | xclip -selection "clipboard"
