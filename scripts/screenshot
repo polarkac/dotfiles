@@ -3,10 +3,11 @@
 date=$(date +%d%m%y-%H%M%S)
 extension=".jpg"
 
+sleep 0.3
 case "$1" in
-    1) import -window root -display :0.0 -crop '1920x1080+1920+0' /tmp/$date$extension ;;
-    2) import -window root -display :0.0 -crop '1920x1080+0+0' /tmp/$date$extension ;;
-    *) import /tmp/$date$extension ;;
+    1) import -window root -display :0.0 -crop '1920x1080+1920+0' -quality 100 /tmp/$date$extension ;;
+    2) import -window root -display :0.0 -crop '1920x1080+0+0' -quality 100 /tmp/$date$extension ;;
+    *) import -quality 100 /tmp/$date$extension ;;
 esac
 
 mv /tmp/$date$extension ~/Dropbox/Public/screenshots/
