@@ -67,6 +67,9 @@ Plug 'bling/vim-airline'
 " Git managment inside Neovim
 Plug 'tpope/vim-fugitive'
 
+" Managing surrounding characters such as braces, quotes etc.
+Plug 'tpope/vim-surround'
+
 call plug#end()
 
 " Turn on filetype plugin detection and indent files
