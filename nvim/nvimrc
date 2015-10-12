@@ -3,29 +3,13 @@ set nocompatible
 " Automatic reloading of .nvimrc
 autocmd! bufwritepost nvimrc source %
 
-" Set mapleader to comma
-let mapleader = ','
-let g:mapleader = ','
-
-" Bind Ctrl + [h,j,k,l] for quick window movement
-noremap <c-h> <c-w>h
-noremap <c-j> <c-w>j
-noremap <c-k> <c-w>k
-noremap <c-l> <c-w>l
-
-" Easy sorting of selected lines
-vnoremap <Leader>s :sort<CR>
-
-" Better indenting of code block
-vnoremap < <gv
-vnoremap > >gv
-
 " Enable syntax highlighting
 syntax on
 
 " Turn off filetype detection
 filetype off
 
+" Plugins {{{
 call plug#begin('~/.nvim/plugged')
 
 " Library needed by some plugins
@@ -71,10 +55,19 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 
 call plug#end()
+" }}}
 
 " Turn on filetype plugin detection and indent files
 filetype plugin indent on
 
+" Colors {{{
+" Set dark background
+set background=dark
+" Set colorscheme to molokai
+colorscheme molokai
+" }}}
+
+" PyMode {{{
 " Turn off code folding from python-mode
 let g:pymode_folding = 0
 " Turn off python-mode breakpoints
@@ -83,10 +76,9 @@ let g:pymode_breakpoint = 0
 let g:pymode_lint = 0
 " Turn off python-mode rope
 let g:pymode_rope = 0
+" }}}
 
-" Set colorscheme to molokai
-colorscheme molokai
-
+" NERDTree {{{
 " NERDTree should ignore Python binary files
 let NERDTreeIgnore = ['\.pyc$']
 " Close NERDTree after file is opened
@@ -96,16 +88,28 @@ let NERDTreeShowHidden=1
 " Map Ctrl + x to open NERDTree file explorer
 nnoremap <Leader>x :NERDTreeToggle<CR>
 inoremap <Leader>x <Esc>:NERDTreeToggle<CR>
+" }}}
 
+" UltiSnips {{{
 " Vertical split for UltiSnips edit window
 let g:UltiSnipsEditSplit = 'vertical'
+" }}}
 
+" CtrlP {{{
+" Order matching files top to bottom
+let g:ctrlp_match_window = 'bottom,order:ttb'
+" Set Silver Searcher as search command
+let g:ctrlp_user_command = 'ag %s -l --nocolor --path-to-agignore=~/.config/agignore --hidden -g ""'
 " Ctrlp should ignore some hidden folders and binary/temp files
+" Unfortunately it does not work with user command. Ag should
+" respect gitignore + own agignore file
 let g:ctrlp_custom_ignore = {
             \ 'dir':  '\v[\/\.](git|hg|svn|build)$',
             \ 'file': '\v\.(pyc|swp|so|class)$',
             \ }
+" }}}
 
+" Syntastic {{{
 " Set Syntastic to use python and flake8 checkers for Python
 let g:syntastic_python_checkers = ['python', 'flake8']
 " Ignore some conventions and set line length to 85
@@ -114,7 +118,9 @@ let g:syntastic_python_flake8_args = '--ignore=E302 --max-line-length=85'
 let g:syntastic_cpp_check_header = 1
 " Turn on java configuration file for classpath
 let g:syntastic_java_javac_config_file_enabled=1
+" }}}
 
+" AirLine {{{
 " Turn on powerline fonts for airline
 let g:airline_powerline_fonts = 1
 " Set theme for airline
@@ -122,17 +128,18 @@ let g:airline_theme = 'powerlineish'
 " Display all buffers
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
+" }}}
 
+" Fugitive {{{
 " Fugitive mapping
 nmap <silent> <leader>gs :Gstatus<cr>
 nmap <silent> <leader>gb :Gblame<cr>
 nmap <silent> <leader>gd :Gdiff<cr>
 nmap <silent> <leader>gc :Gcommit<cr>
 nmap <silent> <leader>gw :Gwrite<cr>
+" }}}
 
-" Make files should use tabs instead of spaces
-autocmd FileType make setlocal noexpandtab
-
+" Relative numbering {{{
 " Set relative numbers with current line number on cursor line
 set relativenumber
 set number
@@ -140,9 +147,56 @@ set number
 autocmd InsertEnter * set number norelativenumber
 " Switch back to relative numbers in Normal mode
 autocmd InsertLeave * set number relativenumber
+" }}}
 
-" Set dark background
-set background=dark
+" Persistent undo {{{
+" It remember changes after file is closed
+set undofile
+set undodir=~/.vim/undo
+set undolevels=1000
+set undoreload=10000
+" }}}
+
+" Mapping {{{
+" Set mapleader to comma
+let mapleader = ','
+let g:mapleader = ','
+
+" Bind Ctrl + [h,j,k,l] for quick window movement
+noremap <c-h> <c-w>h
+noremap <c-j> <c-w>j
+noremap <c-k> <c-w>k
+noremap <c-l> <c-w>l
+
+" Easy sorting of selected lines
+vnoremap <Leader>s :sort<CR>
+
+" Better indenting of code block
+vnoremap < <gv
+vnoremap > >gv
+
+" Easy markdown compilation to HTML
+nmap <Leader>md :!markdown %<cr>
+" Remove trailing spaces
+nmap <Leader><space> :%s/\s\+$<cr>
+
+" Scroll faster
+nnoremap <c-e> 5<c-e>
+nnoremap <c-y> 5<c-y>
+
+" Better movement for long wrapped lines
+nnoremap j gj
+nnoremap k gk
+nnoremap ^ g^
+nnoremap $ g$
+
+" Map double Escape to switch from terminal to normal mode
+tnoremap <esc><esc> <c-\><c-n>
+" }}}
+
+" Misc {{{
+" Make files should use tabs instead of spaces
+autocmd FileType make setlocal noexpandtab
 
 " Set tab to result in 4 spaces
 set tabstop=4
@@ -191,12 +245,6 @@ set scrolloff=10
 " Keep 1 line left or right when scroll
 set sidescrolloff=1
 
-" Persistent undo, it remember changes after file is closed
-set undofile
-set undodir=~/.vim/undo
-set undolevels=1000
-set undoreload=10000
-
 " Set up directory for swap and backup files
 set backupdir=~/.nvim-tmp,/tmp
 set directory=~/.nvim-tmp,/tmp
@@ -207,6 +255,7 @@ highlight MatchParen cterm=bold ctermbg=none ctermfg=magenta
 " Highlight trailing whitespaces
 highlight ExtraWhitespace ctermbg=red
 au BufWinEnter * match ExtraWhitespace /\s\+$/
+
 " Show trailing whitespace as dot
 " Show tab character as >-
 set list
@@ -221,18 +270,8 @@ au VimResized * :wincmd =
 " Disable mouse
 set mouse=
 
-nmap <Leader>md :!markdown %<cr>
-nmap <Leader><space> :%s/\s\+$<cr>
+" Use modeline specified in file
+set modelines=1
+" }}}
 
-" Scroll faster
-nnoremap <c-e> 5<c-e>
-nnoremap <c-y> 5<c-y>
-
-" Better movement for long wrapped lines
-nnoremap j gj
-nnoremap k gk
-nnoremap ^ g^
-nnoremap $ g$
-
-" Map double Escape to switch from terminal to normal mode
-tnoremap <esc><esc> <c-\><c-n>
+" vim:foldmethod=marker:foldlevel=0
