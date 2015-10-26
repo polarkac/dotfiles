@@ -67,6 +67,43 @@ set background=dark
 colorscheme molokai
 " }}}
 
+" Mapping {{{
+" Set mapleader to comma
+let mapleader = ','
+let g:mapleader = ','
+
+" Bind Ctrl + [h,j,k,l] for quick window movement
+noremap <c-h> <c-w>h
+noremap <c-j> <c-w>j
+noremap <c-k> <c-w>k
+noremap <c-l> <c-w>l
+
+" Easy sorting of selected lines
+vnoremap <Leader>s :sort<CR>
+
+" Better indenting of code block
+vnoremap < <gv
+vnoremap > >gv
+
+" Easy markdown compilation to HTML
+nmap <Leader>md :!markdown %<cr>
+" Remove trailing spaces
+nmap <Leader><space> :%s/\s\+$<cr>
+
+" Scroll faster
+nnoremap <c-e> 5<c-e>
+nnoremap <c-y> 5<c-y>
+
+" Better movement for long wrapped lines
+nnoremap j gj
+nnoremap k gk
+nnoremap ^ g^
+nnoremap $ g$
+
+" Map double Escape to switch from terminal to normal mode
+tnoremap <esc><esc> <c-\><c-n>
+" }}}
+
 " PyMode {{{
 " Turn off code folding from python-mode
 let g:pymode_folding = 0
@@ -85,7 +122,7 @@ let NERDTreeIgnore = ['\.pyc$']
 let g:NERDTreeQuitOnOpen=1
 " Show hidden files
 let NERDTreeShowHidden=1
-" Map Ctrl + x to open NERDTree file explorer
+" Map <Leader>x to open NERDTree file explorer
 nnoremap <Leader>x :NERDTreeToggle<CR>
 inoremap <Leader>x <Esc>:NERDTreeToggle<CR>
 " }}}
@@ -155,43 +192,6 @@ set undofile
 set undodir=~/.vim/undo
 set undolevels=1000
 set undoreload=10000
-" }}}
-
-" Mapping {{{
-" Set mapleader to comma
-let mapleader = ','
-let g:mapleader = ','
-
-" Bind Ctrl + [h,j,k,l] for quick window movement
-noremap <c-h> <c-w>h
-noremap <c-j> <c-w>j
-noremap <c-k> <c-w>k
-noremap <c-l> <c-w>l
-
-" Easy sorting of selected lines
-vnoremap <Leader>s :sort<CR>
-
-" Better indenting of code block
-vnoremap < <gv
-vnoremap > >gv
-
-" Easy markdown compilation to HTML
-nmap <Leader>md :!markdown %<cr>
-" Remove trailing spaces
-nmap <Leader><space> :%s/\s\+$<cr>
-
-" Scroll faster
-nnoremap <c-e> 5<c-e>
-nnoremap <c-y> 5<c-y>
-
-" Better movement for long wrapped lines
-nnoremap j gj
-nnoremap k gk
-nnoremap ^ g^
-nnoremap $ g$
-
-" Map double Escape to switch from terminal to normal mode
-tnoremap <esc><esc> <c-\><c-n>
 " }}}
 
 " Misc {{{
