@@ -10,7 +10,7 @@ syntax on
 filetype off
 
 " Plugins {{{
-call plug#begin('~/.nvim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 " Library needed by some plugins
 Plug 'L9'
