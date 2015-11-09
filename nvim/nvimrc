@@ -54,6 +54,9 @@ Plug 'tpope/vim-fugitive'
 " Managing surrounding characters such as braces, quotes etc.
 Plug 'tpope/vim-surround'
 
+" Asynchronous maker and linter
+Plug 'benekastah/neomake', { 'on': ['Neomake'] }
+
 call plug#end()
 " }}}
 
@@ -104,6 +107,7 @@ nnoremap $ g$
 tnoremap <esc><esc> <c-\><c-n>
 " }}}
 
+" Plugin settings {{{
 " PyMode {{{
 " Turn off code folding from python-mode
 let g:pymode_folding = 0
@@ -174,6 +178,11 @@ nmap <silent> <leader>gb :Gblame<cr>
 nmap <silent> <leader>gd :Gdiff<cr>
 nmap <silent> <leader>gc :Gcommit<cr>
 nmap <silent> <leader>gw :Gwrite<cr>
+" }}}
+
+" Neomake {{{
+autocmd! BufWritePost * Neomake
+" }}}
 " }}}
 
 " Relative numbering {{{
