@@ -272,4 +272,18 @@ set mouse=
 set modelines=1
 " }}}
 
+" Utility functions {{{
+function! PastebinSelection(line1, line2)
+    let lines = map(getline(a:line1, a:line2), "escape(v:val, '\\')")
+    let content = join(lines, '\n')
+    exec g:_uspy "import subprocess"
+    exec g:_uspy "content = '". escape(content, "'") ."'"
+    exec g:_uspy "print(content)"
+    exec g:_uspy "subprocess.call(['pb', content])"
+endfunction
+command! -nargs=? -range=% PastebinSelection :silent call PastebinSelection(<line1>, <line2>)
+nnoremap <Leader>pb :PastebinSelection<CR>
+vnoremap <Leader>pb :PastebinSelection<CR>
+" }}}
+
 " vim:foldmethod=marker:foldlevel=0
