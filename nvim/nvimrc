@@ -27,9 +27,6 @@ Plug 'a.vim'
 " Quick (un)comment line(s)
 Plug 'scrooloose/nerdcommenter'
 
-" Check source code syntax
-Plug 'scrooloose/syntastic'
-
 " Easy managing for snippets
 Plug 'SirVer/ultisnips'
 
@@ -150,17 +147,6 @@ let g:ctrlp_custom_ignore = {
             \ }
 " }}}
 
-" Syntastic {{{
-" Set Syntastic to use python and flake8 checkers for Python
-let g:syntastic_python_checkers = ['python', 'flake8']
-" Ignore some conventions and set line length to 85
-let g:syntastic_python_flake8_args = '--ignore=E302 --max-line-length=85'
-" Turn on header checking for C++
-let g:syntastic_cpp_check_header = 1
-" Turn on java configuration file for classpath
-let g:syntastic_java_javac_config_file_enabled=1
-" }}}
-
 " AirLine {{{
 " Turn on powerline fonts for airline
 let g:airline_powerline_fonts = 1
@@ -182,6 +168,9 @@ nmap <silent> <leader>gw :Gwrite<cr>
 
 " Neomake {{{
 autocmd! BufWritePost * Neomake
+let g:neomake_python_flake8_maker = {
+    \ 'args': ['--ignore=E302', '--max-line-length=85'],
+    \ }
 " }}}
 " }}}
 
