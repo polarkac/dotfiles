@@ -68,10 +68,10 @@ fi
 # Use Neovim as text editor of choice
 export EDITOR=nvim
 
-# User powerline only outside of Midnigh Commander
-if ps $PPID | grep mc; then
+# Use powerline only outside of Midnigh Commander
+if [[ $(ps $PPID | grep mc) ]]; then
     PROMPT="[%{$fg[green]%}%n@%m %1~%{$reset_color%}]%# "
     RPROMPT=""
-else
+elif [[ ! -o login ]]; then
     source ~/.local/lib/python3.5/site-packages/powerline/bindings/zsh/powerline.zsh
 fi
