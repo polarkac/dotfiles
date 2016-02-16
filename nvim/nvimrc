@@ -42,8 +42,9 @@ Plug 'kien/ctrlp.vim'
 " Python mode plugin for better indention, autocomplete etc
 Plug 'klen/python-mode'
 
-" Sexy status bar like powerline
-Plug 'bling/vim-airline'
+" Sexy status bar like powerline with themes
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Git managment inside Neovim
 Plug 'tpope/vim-fugitive'
