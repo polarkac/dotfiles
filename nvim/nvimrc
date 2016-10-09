@@ -32,10 +32,7 @@ Plug 'SirVer/ultisnips'
 
 " Autocompletion for quotes, parentheses etc
 Plug 'Raimondi/delimitMate'
-
-" Groovy syntax for .gradle files
-Plug 'tfnico/vim-gradle'
-
+"
 " Fuzzy finder for files and buffers
 Plug 'kien/ctrlp.vim'
 
@@ -46,14 +43,14 @@ Plug 'klen/python-mode'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" Git managment inside Neovim
-Plug 'tpope/vim-fugitive'
-
 " Managing surrounding characters such as braces, quotes etc.
 Plug 'tpope/vim-surround'
 
 " Asynchronous maker and linter
-Plug 'benekastah/neomake', { 'on': ['Neomake'] }
+Plug 'benekastah/neomake'
+
+" Sorting lines and arguments
+Plug 'christoomey/vim-sort-motion'
 
 call plug#end()
 " }}}
