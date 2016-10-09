@@ -16,32 +16,31 @@ setopt COMPLETE_ALIASES
 # Set key binding to emacs (no insert/normal mode)
 bindkey -e
 
-# Prevent pasted tab to perform completion
-zstyle ':completion:*' insert-tab pending
-# default to file completion
-zstyle ':completion:*' completer _expand _complete _files _correct _approximate
-# Completion list behaves like menu selecting
-zstyle ':completion:*' menu select
-autoload -Uz compinit
+autoload -Uz compinit colors
 compinit
+colors
 
-# Bind home key
-bindkey '^[[H' beginning-of-line
-bindkey '^[[1~' beginning-of-line
-# Bind end key
-bindkey '^[[F' end-of-line
-bindkey '^[[4~' end-of-line
-# Bind delete key
-bindkey '^[[3~' delete-char
-# Bind page up key
-bindkey '^[[5~' beginning-of-buffer-or-history
-# Bind page down key
-bindkey '^[[6~' end-of-buffer-or-history
-# Bind Ctrl + R shortcut
+# Automaticaly find new executables in $PATH
+zstyle ':completion:*' rehash true
+
+typeset -A key
+key[Home]=${terminfo[khome]}
+key[End]=${terminfo[kend]}
+key[Insert]=${terminfo[kich1]}
+key[Delete]=${terminfo[kdch1]}
+key[Up]=${terminfo[kcuu1]}
+key[Down]=${terminfo[kcud1]}
+key[Left]=${terminfo[kcub1]}
+key[Right]=${terminfo[kcuf1]}
+key[PageUp]=${terminfo[kpp]}
+key[PageDown]=${terminfo[knp]}
+
+bindkey "$(tput khome)" beginning-of-line
+bindkey "$(tput kend)" end-of-line
+bindkey "$(tput kdch1)" delete-char
+bindkey "$(tput kpp)" beginning-of-buffer-or-history
+bindkey "$(tput knp)" end-of-buffer-or-history
 bindkey '^R' history-incremental-search-backward
-
-# Turn on colors
-autoload -U colors && colors
 
 # Set up a custom prompt with right prompt
 # This is used only if Powerline is not
