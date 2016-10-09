@@ -19,5 +19,5 @@ case "$1" in
 esac
 
 mv /tmp/$date$extension ~/Dropbox/Public/screenshots/
-dropbox-cli puburl ~/Dropbox/Public/screenshots/$date$extension | xclip -select "clipboard"
+dropbox-cli sharelink ~/Dropbox/Public/screenshots/$date$extension | xclip -select "clipboard"
 notify-send -h string:bgcolor:$notify_bg -h string:fgcolor:$notify_fg SCREENSHOT "$notify_msg"
