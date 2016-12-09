@@ -135,7 +135,7 @@ let g:UltiSnipsEditSplit = 'vertical'
 " Order matching files top to bottom
 let g:ctrlp_match_window = 'bottom,order:ttb'
 " Set Silver Searcher as search command
-let g:ctrlp_user_command = 'ag %s -l --nocolor --path-to-agignore=$HOME/.config/agignore --hidden -g ""'
+let g:ctrlp_user_command = 'ag %s -l --nocolor --path-to-ignore=$HOME/.config/agignore --hidden -g ""'
 " Ctrlp should ignore some hidden folders and binary/temp files
 " Unfortunately it does not work with user command. Ag should
 " respect gitignore + own agignore file
