@@ -116,7 +116,7 @@ let g:pymode_rope = 0
 
 " NERDTree {{{
 " NERDTree should ignore Python binary files
-let NERDTreeIgnore = ['\.pyc$']
+let NERDTreeIgnore = ['\.pyc$', '\.gch$']
 " Close NERDTree after file is opened
 let g:NERDTreeQuitOnOpen=1
 " Show hidden files
@@ -170,7 +170,7 @@ let g:neomake_python_flake8_maker = {
     \ 'args': ['--ignore=E302', '--max-line-length=85'],
     \ }
 let g:neomake_cpp_gcc_maker = {
-    \ 'args': ['-Iincludes/', '-std=c++11'],
+    \ 'args': ['-I./includes/', '-std=c++11'],
     \ }
 " }}}
 
