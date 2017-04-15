@@ -79,7 +79,7 @@ rofi.kb-custom-8:                    Alt+8
 rofi.kb-custom-9:                    Alt+9
 rofi.kb-row-left:                    Control+Page_Up
 rofi.kb-row-right:                   Control+Page_Down
-rofi.kb-row-up:                      Up,Control+k,Shift+Tab
+rofi.kb-row-up:                      Up,Control+k
 rofi.kb-row-down:                    Down,Control+j
 rofi.kb-row-tab:                     Tab
 rofi.kb-page-prev:                   Page_Up
