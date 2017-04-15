@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env python3
 
 date=$(date +%d%m%y-%H%M%S)
 extension=".jpg"
