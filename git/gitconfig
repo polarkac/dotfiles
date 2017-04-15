@@ -16,5 +16,5 @@
     path = nvim
 [alias]
     st = status --short --branch
-    lol = log --all --graph --decorate --oneline --abbrev-commit
+    lol = log --all --graph --decorate --pretty=format:\"%C(yellow)%h%Creset %ad %C(green)%an %C(red)%s%Creset %d\" --date=short
     diffc = diff --cached
