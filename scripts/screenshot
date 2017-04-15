@@ -1,23 +1,113 @@
 #!/usr/bin/env python3
 
-date=$(date +%d%m%y-%H%M%S)
-extension=".jpg"
-notify_bg="#22a34b"
-notify_fg="#000000"
+import time
+import subprocess
+import sys
+from datetime import datetime
+from imgurpython import ImgurClient
 
-sleep 0.3
-case "$1" in
-    1)
-        import -window root -display :0.0 -crop '1920x1080+1920+0' -quality 100 /tmp/$date$extension
-        notify_msg="Screenshot of first monitor captured." ;;
-    2)
-        import -window root -display :0.0 -crop '1920x1080+0+0' -quality 100 /tmp/$date$extension
-        notify_msg="Screenshot of second monitor captured." ;;
-    *)
-        import -quality 100 /tmp/$date$extension
-        notify_msg="Screenshot of region/window captured." ;;
-esac
+def send_notification(message):
+    notify_bg = "#22a34b"
+    notify_fg = "#000000"
+    subprocess.Popen([
+        'notify-send',
+        '-h', 'string:bgcolor:{}'.format(notify_bg),
+        '-h', 'string:fgcolor:{}'.format(notify_fg),
+        'SCREENSHOT', message
+    ])
 
-mv /tmp/$date$extension ~/Dropbox/Public/screenshots/
-dropbox-cli sharelink ~/Dropbox/Public/screenshots/$date$extension | xclip -select "clipboard"
-notify-send -h string:bgcolor:$notify_bg -h string:fgcolor:$notify_fg SCREENSHOT "$notify_msg"
+def create_screenshot(screenshot_type='region'):
+    date = datetime.now().strftime('%y%m%d-%H%M%S')
+    extension = '.jpg'
+    screenshot_types = {
+        'region': ['-quality', '100'],
+        'first_screen': [
+            '-window', 'root', '-display', ':0.0',
+            '-crop', '1920x1080+1920+0',
+            '-quality', '100',
+        ],
+        'second_screen': [
+            '-window', 'root', '-display', ':0.0',
+            '-crop', '1920x1080+0+0',
+            '-quality', '100',
+        ],
+    }
+
+    if screenshot_type in screenshot_types:
+        screenshot_path = '/tmp/{date}{extension}'.format(
+            date=date, extension=extension
+        )
+        arguments = (
+            ['import'] + screenshot_types.get(screenshot_type) + [screenshot_path]
+        )
+        import_command = subprocess.Popen(arguments)
+        try:
+            import_command.wait(10)
+        except subprocess.TimeoutExpired:
+            import_command.kill()
+            screenshot_path = None
+    else:
+        screenshot_path = None
+
+    return screenshot_path
+
+def copy_to_clipboard(url):
+    echo_url = subprocess.Popen(['echo', url], stdout=subprocess.PIPE)
+    subprocess.Popen(['xclip', '-selection', 'clipboard'], stdin=echo_url.stdout)
+
+def check_tokens(tokens_file):
+    access_token = None
+    refresh_token = None
+    try:
+        with open(tokens_file) as f:
+            access_token = f.readline()
+            refresh_token = f.readline()
+    except FileNotFoundError:
+        pass
+
+    return (access_token, refresh_token)
+
+def login_to_imgur(client_id, client_secret, tokens_file):
+    client = ImgurClient(client_id, client_secret)
+    auth_url = client.get_auth_url('pin')
+    print('Auth url: {}'.format(auth_url))
+    pin = input('Pin: ')
+    credentials = client.authorize(pin, 'pin')
+    with open(tokens_file, 'w') as f:
+        f.write('{}\n'.format(credentials.get('access_token')))
+        f.write('{}\n'.format(credentials.get('refresh_token')))
+
+def upload_to_imgur(screenshot_path, client_id, client_secret, tokens_file):
+    tokens = check_tokens(tokens_file)
+    if not tokens[0] or not tokens[1]:
+        login_to_imgur(client_id, client_secret, tokens_file)
+        tokens = check_tokens(tokens_file)
+
+    client = ImgurClient(client_id, client_secret)
+    client.set_user_auth(tokens[0].strip(), tokens[1].strip())
+    with open(screenshot_path, 'rb') as fd:
+        response = client.upload(fd, anon=False)
+
+    return response['link']
+
+if __name__ == '__main__':
+    time.sleep(1)
+
+    IMGUR_CLIENT_ID = '9f6c87a28a78837'
+    IMGUR_CLIENT_SECRET = '12456101b315aababa2a5309c058a7710cf56e49'
+    arguments_map = {'1': 'first_screen', '2': 'second_screen'}
+    try:
+        screenshot_type = arguments_map.get(sys.argv[1], 'region')
+    except IndexError:
+        screenshot_type = 'region'
+
+    screenshot_path = create_screenshot(screenshot_type)
+    if screenshot_path is not None:
+        imgur_link = upload_to_imgur(
+            screenshot_path, IMGUR_CLIENT_ID, IMGUR_CLIENT_SECRET,
+            '/home/polarkac/.config/imgur_tokens.txt'
+        )
+        copy_to_clipboard(imgur_link)
+        send_notification('Screenshot has been taken.')
+    else:
+        send_notification('Screenshot has not been taken due to an error.')
