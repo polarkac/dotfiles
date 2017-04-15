@@ -26,11 +26,16 @@ class PacmanStatusModule(IntervalModule):
             ['wc', '-l'], stdin=updated_packages.stdout, stdout=subprocess.PIPE
         )
         number_of_packages = number_of_lines.communicate()[0].decode('utf-8')
-        number_of_packages = number_of_packages[:-1]
+        number_of_packages = int(number_of_packages[:-1])
         updated_packages.stdout.close()
         number_of_lines.stdout.close()
 
-        if number_of_packages == '0':
+        if number_of_packages >= 50:
+            self.color = '#FF0000'
+        else:
+            self.color = '#00FF00'
+
+        if number_of_packages == 0:
             number_of_packages = 'up-to-date'
 
         return number_of_packages
