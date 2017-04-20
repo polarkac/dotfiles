@@ -1,0 +1,23 @@
+#!/bin/sh
+
+if [[ ! -z $1 ]]; then
+    stream_name=$1
+else
+    stream_name=""
+fi
+
+if [[ -z $2 ]]; then
+    quality="best"
+else
+    quality=$2
+fi
+
+if [[ ! -z $stream_name ]]; then
+    notify-send "TWITCH" "Launching $1 stream..."
+    output=$(streamlink --logleve error https://twitch.tv/$stream_name $quality)
+    if [[ $? != 0 ]]; then
+        notify-send "TWITCH" "$output"
+    fi
+else
+    notify-send "TWITCH" "No stream name given."
+fi
