@@ -85,6 +85,7 @@ def upload_to_imgur(screenshot_path, client_id, client_secret, tokens_file):
 
     client = ImgurClient(client_id, client_secret)
     client.set_user_auth(tokens[0].strip(), tokens[1].strip())
+    send_notification('Uploading screenshot...')
     with open(screenshot_path, 'rb') as fd:
         response = client.upload(fd, anon=False)
 
@@ -108,6 +109,6 @@ if __name__ == '__main__':
             '/home/polarkac/.config/imgur_tokens.txt'
         )
         copy_to_clipboard(imgur_link)
-        send_notification('Screenshot has been taken.')
+        send_notification('Screenshot has been taken. Link copied.')
     else:
         send_notification('Screenshot has not been taken due to an error.')
