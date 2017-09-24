@@ -24,9 +24,6 @@ Plug 'scrooloose/nerdtree'
 " Quick switching between source and header file
 Plug 'a.vim'
 
-" Quick (un)comment line(s)
-Plug 'scrooloose/nerdcommenter'
-
 " Easy managing for snippets
 Plug 'SirVer/ultisnips'
 
@@ -43,14 +40,8 @@ Plug 'klen/python-mode'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" Managing surrounding characters such as braces, quotes etc.
-Plug 'tpope/vim-surround'
-
 " Asynchronous maker and linter
 Plug 'benekastah/neomake'
-
-" Sorting lines and arguments
-Plug 'christoomey/vim-sort-motion'
 
 call plug#end()
 " }}}
@@ -63,6 +54,7 @@ filetype plugin indent on
 set background=dark
 " Set colorscheme to molokai
 colorscheme molokai
+hi Search cterm=bold ctermfg=black ctermbg=green
 " }}}
 
 " Mapping {{{
@@ -87,6 +79,10 @@ vnoremap > >gv
 nmap <Leader>md :!markdown %<cr>
 " Remove trailing spaces
 nmap <Leader><space> :%s/\s\+$<cr>
+
+" Put parenthesis, quote marks around selected text
+vnoremap <Leader>ap xi()<Esc>P
+vnoremap <Leader>aq xi""<Esc>P
 
 " Scroll faster
 nnoremap <c-e> 5<c-e>
@@ -284,6 +280,7 @@ endfunction
 command! -nargs=? -range=% PastebinSelection :silent call PastebinSelection(<line1>, <line2>)
 nnoremap <Leader>pb :PastebinSelection<CR>
 vnoremap <Leader>pb :PastebinSelection<CR>
+" }}}
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
