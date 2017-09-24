@@ -112,7 +112,7 @@ URxvt*color6:           #06989a
 URxvt*color14:          #34e2e2
 URxvt*color7:           #d3d7cf
 URxvt*color15:          #eeeeec
-URxvt*font:             xft:Hack:size=12:style=regular
+URxvt*font:             xft:Hack:size=13:style=regular
 URxvt*scrollBar:        false
 URxvt*lineSpace:        0.5
 URxvt*perl-ext-common:  default,matcher
