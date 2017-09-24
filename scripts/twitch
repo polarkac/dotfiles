@@ -13,11 +13,11 @@ else
 fi
 
 if [[ ! -z $stream_name ]]; then
-    notify-send "TWITCH" "Launching $1 stream..."
-    output=$(streamlink --logleve error https://twitch.tv/$stream_name $quality)
+    notify-send --app-name "Streamlink" "TWITCH" "Launching $1 stream..."
+    output=$(streamlink -a "--title 'Twitch - $stream_name' {filename}" --loglevel error https://twitch.tv/$stream_name $quality)
     if [[ $? != 0 ]]; then
-        notify-send "TWITCH" "$output"
+        notify-send --app-name "Streamlink" "TWITCH" "$output"
     fi
 else
-    notify-send "TWITCH" "No stream name given."
+    notify-send --app-name "Streamlink" "TWITCH" "No stream name given."
 fi
