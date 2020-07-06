@@ -12,29 +12,20 @@ filetype off
 " Plugins {{{
 call plug#begin('~/.config/nvim/plugged')
 
-" Library needed by some plugins
-Plug 'L9'
-
 " Molokai colorscheme
 Plug 'tomasr/molokai'
 
 " Quick navigation for files/folders in current folder
 Plug 'scrooloose/nerdtree'
 
-" Quick switching between source and header file
-Plug 'a.vim'
-
 " Easy managing for snippets
 Plug 'SirVer/ultisnips'
 
-" Autocompletion for quotes, parentheses etc
-Plug 'Raimondi/delimitMate'
-"
 " Fuzzy finder for files and buffers
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 
 " Python mode plugin for better indention, autocomplete etc
-Plug 'klen/python-mode'
+Plug 'klen/python-mode', {'branch': 'develop'}
 
 " Sexy status bar like powerline with themes
 Plug 'vim-airline/vim-airline'
@@ -42,6 +33,9 @@ Plug 'vim-airline/vim-airline-themes'
 
 " Asynchronous maker and linter
 Plug 'benekastah/neomake'
+
+" Vimwiki for easy notes and todo lists
+Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
 
 call plug#end()
 " }}}
@@ -75,8 +69,6 @@ vnoremap <Leader>s :sort<CR>
 vnoremap < <gv
 vnoremap > >gv
 
-" Easy markdown compilation to HTML
-nmap <Leader>md :!markdown %<cr>
 " Remove trailing spaces
 nmap <Leader><space> :%s/\s\+$<cr>
 
@@ -88,26 +80,25 @@ vnoremap <Leader>aq xi""<Esc>P
 nnoremap <c-e> 5<c-e>
 nnoremap <c-y> 5<c-y>
 
-" Better movement for long wrapped lines
-nnoremap j gj
-nnoremap k gk
-nnoremap ^ g^
-nnoremap $ g$
-
 " Map double Escape to switch from terminal to normal mode
 tnoremap <esc><esc> <c-\><c-n>
+
+" Escape also clear search highlight
+nnoremap <Esc> :nohl<cr>
+imap <Esc> <Esc>:nohl<cr>
+
 " }}}
 
-" Plugin settings {{{
+" Settings {{{
 " PyMode {{{
 " Turn off code folding from python-mode
 let g:pymode_folding = 0
 " Turn off python-mode breakpoints
 let g:pymode_breakpoint = 0
-" Turn off python-mode code checking (I am using syntastic)
-let g:pymode_lint = 0
+" Turn off python-mode code checking
+let g:pymode_lint = 1
 " Turn off python-mode rope
-let g:pymode_rope = 0
+let g:pymode_rope = 1
 " }}}
 
 " NERDTree {{{
@@ -125,6 +116,12 @@ inoremap <Leader>x <Esc>:NERDTreeToggle<CR>
 " UltiSnips {{{
 " Vertical split for UltiSnips edit window
 let g:UltiSnipsEditSplit = 'vertical'
+" Use snippet folder in dev directory
+let g:UltiSnipsSnippetsDir = '~/.config/nvim/UltiSnips/'
+" Use tab as trigger and for jumps
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " }}}
 
 " CtrlP {{{
@@ -132,13 +129,8 @@ let g:UltiSnipsEditSplit = 'vertical'
 let g:ctrlp_match_window = 'bottom,order:ttb'
 " Set Silver Searcher as search command
 let g:ctrlp_user_command = 'ag %s -l --nocolor --path-to-ignore=$HOME/.config/agignore --hidden -g ""'
-" Ctrlp should ignore some hidden folders and binary/temp files
-" Unfortunately it does not work with user command. Ag should
-" respect gitignore + own agignore file
-let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/\.](git|hg|svn|build)$',
-            \ 'file': '\v\.(pyc|swp|so|class)$',
-            \ }
+" CtrlP tags
+nnoremap <Leader>z :CtrlPTag<cr>
 " }}}
 
 " AirLine {{{
@@ -151,15 +143,6 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 " }}}
 
-" Fugitive {{{
-" Fugitive mapping
-nmap <silent> <leader>gs :Gstatus<cr>
-nmap <silent> <leader>gb :Gblame<cr>
-nmap <silent> <leader>gd :Gdiff<cr>
-nmap <silent> <leader>gc :Gcommit<cr>
-nmap <silent> <leader>gw :Gwrite<cr>
-" }}}
-
 " Neomake {{{
 autocmd! BufWritePost * Neomake
 let g:neomake_python_flake8_maker = {
@@ -168,6 +151,20 @@ let g:neomake_python_flake8_maker = {
 let g:neomake_cpp_gcc_maker = {
     \ 'args': ['-I./includes/', '-std=c++11'],
     \ }
+" }}}
+
+" Vimwiki {{{
+let g:vimwiki_customwiki2html = $HOME.'/.config/nvim/plugged/vimwiki/autoload/vimwiki/customwiki2html.sh'
+let private_wiki = {}
+let private_wiki.path = '~/vimwiki/source/'
+let private_wiki.path_html = '~/vimwiki/html/'
+let private_wiki.auto_export = 1
+let private_wiki.css_file = '~/vimwiki/templates/style.css'
+let private_wiki.template_path = '~/vimwiki/templates/'
+let private_wiki.template_default = 'default_template'
+let private_wiki.template_ext = '.html'
+
+let g:vimwiki_list = [private_wiki]
 " }}}
 
 " Relative numbering {{{
@@ -243,6 +240,9 @@ set sidescrolloff=1
 set backupdir=~/.nvim-tmp,/tmp
 set directory=~/.nvim-tmp,/tmp
 
+" Use spell checking
+set spell spelllang=cs,en_us
+
 " Highlight matched parentheses with light blue background
 highlight MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
@@ -266,21 +266,10 @@ set mouse=
 
 " Use modeline specified in file
 set modelines=1
-" }}}
 
-" Utility functions {{{
-function! PastebinSelection(line1, line2)
-    let lines = map(getline(a:line1, a:line2), "escape(v:val, '\\')")
-    let content = join(lines, '\n')
-    exec g:_uspy "import subprocess"
-    exec g:_uspy "content = '". escape(content, "'") ."'"
-    exec g:_uspy "print(content)"
-    exec g:_uspy "subprocess.call(['pb', content])"
-endfunction
-command! -nargs=? -range=% PastebinSelection :silent call PastebinSelection(<line1>, <line2>)
-nnoremap <Leader>pb :PastebinSelection<CR>
-vnoremap <Leader>pb :PastebinSelection<CR>
-" }}}
+" Use tags from .git directory
+set tags+=.git/tags
+set notagrelative
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
