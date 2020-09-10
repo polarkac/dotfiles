@@ -58,19 +58,5 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 # Aliases
 source $HOME/Development/dotfiles/zsh/aliases.zsh
 
-# Setup correct terminal inside tmux
-export TERM=xterm-256color
-if [[ -n "$TMUX" ]]; then
-    export TERM=screen-256color
-fi
-
 # Use Neovim as text editor of choice
 export EDITOR=nvim
-
-# Use powerline only outside of Midnigh Commander
-if [[ $(ps $PPID | grep mc) ]]; then
-    PROMPT="[%{$fg[green]%}%n@%m %1~%{$reset_color%}]%# "
-    RPROMPT=""
-elif [[ ! -o login ]]; then
-    source ~/.local/lib/python3.5/site-packages/powerline/bindings/zsh/powerline.zsh
-fi
