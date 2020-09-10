@@ -14,7 +14,7 @@ fi
 
 if [[ ! -z $stream_name ]]; then
     notify-send --app-name "Streamlink" "TWITCH" "Launching $1 stream..."
-    output=$(streamlink -a "--title 'Twitch - $stream_name' {filename}" --loglevel error https://twitch.tv/$stream_name $quality)
+    output=$(streamlink --loglevel error https://twitch.tv/$stream_name $quality)
     if [[ $? != 0 ]]; then
         notify-send --app-name "Streamlink" "TWITCH" "$output"
     fi
