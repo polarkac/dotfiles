@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd $HOME/.config/alacritty/
+grep "Dark solarized colors" alacritty.yml > /dev/null 2>&1
+if [[ $? == 0 ]]; then
+    rm alacritty.yml
+    cp alacritty.yml.light alacritty.yml
+else
+    rm alacritty.yml
+    cp alacritty.yml.dark alacritty.yml
+fi
