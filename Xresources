@@ -50,7 +50,6 @@ rofi.line-margin:                    3
 rofi.pid:                            /run/user/1000/rofi.pid
 rofi.kb-primary-paste:               Control+Shift+v,Shift+Insert
 rofi.kb-secondary-paste:             Control+v,Insert
-rofi.kb-clear-line:                  Control+u
 rofi.kb-move-front:                  Control+a
 rofi.kb-move-end:                    Control+e
 rofi.kb-move-word-back:              Alt+b
@@ -79,8 +78,8 @@ rofi.kb-custom-8:                    Alt+8
 rofi.kb-custom-9:                    Alt+9
 rofi.kb-row-left:                    Control+Page_Up
 rofi.kb-row-right:                   Control+Page_Down
-rofi.kb-row-up:                      Up,Control+k
-rofi.kb-row-down:                    Down,Control+j
+rofi.kb-row-up:                      Up
+rofi.kb-row-down:                    Down
 rofi.kb-row-tab:                     Tab
 rofi.kb-page-prev:                   Page_Up
 rofi.kb-page-next:                   Page_Down
