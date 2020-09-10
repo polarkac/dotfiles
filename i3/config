@@ -28,7 +28,7 @@ font pango:Hack 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -101,16 +101,16 @@ bindsym $mod+7 workspace "7.1"
 bindsym $mod+8 workspace "8.1"
 bindsym $mod+9 workspace "9.1"
 bindsym $mod+0 workspace "10.1"
-workspace "1.1" output DVI-D-1
-workspace "2.1" output DVI-D-1
-workspace "3.1" output DVI-D-1
-workspace "4.1" output DVI-D-1
-workspace "5.1" output DVI-D-1
-workspace "6.1" output DVI-D-1
-workspace "7.1" output DVI-D-1
-workspace "8.1" output DVI-D-1
-workspace "9.1" output DVI-D-1
-workspace "10.1" output DVI-D-1
+workspace "1.1" output DVI-D-2
+workspace "2.1" output DVI-D-2
+workspace "3.1" output DVI-D-2
+workspace "4.1" output DVI-D-2
+workspace "5.1" output DVI-D-2
+workspace "6.1" output DVI-D-2
+workspace "7.1" output DVI-D-2
+workspace "8.1" output DVI-D-2
+workspace "9.1" output DVI-D-2
+workspace "10.1" output DVI-D-2
 
 
 bindsym $mod+F1 workspace "1.2"
@@ -123,16 +123,16 @@ bindsym $mod+F7 workspace "7.2"
 bindsym $mod+F8 workspace "8.2"
 bindsym $mod+F9 workspace "9.2"
 bindsym $mod+F0 workspace "10.2"
-workspace "1.2" output HDMI-0
-workspace "2.2" output HDMI-0
-workspace "3.2" output HDMI-0
-workspace "4.2" output HDMI-0
-workspace "5.2" output HDMI-0
-workspace "6.2" output HDMI-0
-workspace "7.2" output HDMI-0
-workspace "8.2" output HDMI-0
-workspace "9.2" output HDMI-0
-workspace "10.2" output HDMI-0
+workspace "1.2" output HDMI-1
+workspace "2.2" output HDMI-1
+workspace "3.2" output HDMI-1
+workspace "4.2" output HDMI-1
+workspace "5.2" output HDMI-1
+workspace "6.2" output HDMI-1
+workspace "7.2" output HDMI-1
+workspace "8.2" output HDMI-1
+workspace "9.2" output HDMI-1
+workspace "10.2" output HDMI-1
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace "1.1"
@@ -193,19 +193,30 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3pystatus-polarkac
-        tray_output HDMI-0
+        status_command py3status
+        tray_output HDMI-1
 }
 
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
-bindsym $mod+x exec i3lock
+bindsym $mod+x exec i3lock-fancy
 bindsym $mod+m exec "pactl set-sink-mute alsa_output.pci-0000_00_1f.3.analog-stereo toggle"
+bindsym $mod+b exec "dbus-send --session --print-reply --dest=org.freedesktop.Notifications /org/freedesktop/Notifications org.freedesktop.Notifications.ShowNotifications"
 
+for_window [title="scratchpad"] move scratchpad
 for_window [class="Steam"] floating enable
 mouse_warping none
 
-exec megasync
-exec dropbox
 exec redshift-gtk
 exec nitrogen --restore
+exec megasync
+exec dropbox
+exec i3-notifier
+exec rclone mount --daemon "Google Drive":/ Development/internetove_poradenstvi/gdrive/
+exec create_scratchpad
+exec keepassxc
+exec firefox
+exec discord
+exec telegram-desktop
+exec chatty
+exec thunderbird
