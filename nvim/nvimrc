@@ -12,8 +12,9 @@ filetype off
 " Plugins {{{
 call plug#begin('~/.config/nvim/plugged')
 
-" Molokai colorscheme
+" Molokai and Solarized colorscheme
 Plug 'tomasr/molokai'
+Plug 'altercation/vim-colors-solarized'
 
 " Quick navigation for files/folders in current folder
 Plug 'scrooloose/nerdtree'
@@ -32,7 +33,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " Asynchronous maker and linter
-Plug 'benekastah/neomake'
+" Plug 'benekastah/neomake'
 
 " Vimwiki for easy notes and todo lists
 Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
@@ -44,11 +45,10 @@ call plug#end()
 filetype plugin indent on
 
 " Colors {{{
-" Set dark background
-set background=dark
-" Set colorscheme to molokai
-colorscheme molokai
-hi Search cterm=bold ctermfg=black ctermbg=green
+" Set light background
+set background=light
+" Set colorscheme to solarized
+colorscheme solarized
 " }}}
 
 " Mapping {{{
@@ -87,6 +87,9 @@ tnoremap <esc><esc> <c-\><c-n>
 nnoremap <Esc> :nohl<cr>
 imap <Esc> <Esc>:nohl<cr>
 
+" Toggle colorschemes
+nnoremap <Leader>t :call ToggleDarkAndLightColorschema()<cr>
+
 " }}}
 
 " Settings {{{
@@ -97,8 +100,9 @@ let g:pymode_folding = 0
 let g:pymode_breakpoint = 0
 " Turn off python-mode code checking
 let g:pymode_lint = 1
+let g:pymode_lint_ignore = ["E302", "E305"]
 " Turn off python-mode rope
-let g:pymode_rope = 1
+let g:pymode_rope = 0
 " }}}
 
 " NERDTree {{{
@@ -137,14 +141,14 @@ nnoremap <Leader>z :CtrlPTag<cr>
 " Turn on powerline fonts for airline
 let g:airline_powerline_fonts = 1
 " Set theme for airline
-let g:airline_theme = 'powerlineish'
+let g:airline_theme = 'solarized'
 " Display all buffers
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 " }}}
 
 " Neomake {{{
-autocmd! BufWritePost * Neomake
+" autocmd! BufWritePost * Neomake
 let g:neomake_python_flake8_maker = {
     \ 'args': ['--ignore=E302', '--max-line-length=85'],
     \ }
@@ -270,6 +274,18 @@ set modelines=1
 " Use tags from .git directory
 set tags+=.git/tags
 set notagrelative
+" }}}
+
+" Custom functions {{{
+function! ToggleDarkAndLightColorschema()
+    if &background == 'light'
+        set background=dark
+    else
+        set background=light
+    endif
+endfunction
+" }}}
+
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
