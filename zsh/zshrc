@@ -60,3 +60,6 @@ source $HOME/Development/dotfiles/zsh/aliases.zsh
 
 # Use Neovim as text editor of choice
 export EDITOR=nvim
+
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh

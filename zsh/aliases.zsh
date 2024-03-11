@@ -9,3 +9,8 @@ alias ta='tmux attach'
 alias tat='tmux attach -t'
 alias tls='tmux ls'
 alias tn='tmux new-session -s'
+
+alias startx='ssh-agent -t 1h startx'
+alias feh='feh -.'
+
+alias rsync='rsync --progress -h'
