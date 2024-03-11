@@ -1,7 +1,11 @@
 [core]
     editor = nvim
+[init]
+    defaultBranch = master
 [push]
     default = simple
+[commit]
+    verbose = true
 [diff]
     tool = nvimdiff
     noprefix = true
@@ -16,5 +20,7 @@
     path = nvim
 [alias]
     st = status --short --branch
-    lol = log --all --graph --decorate --pretty=format:\"%C(yellow)%h%Creset %ad %C(green)%an %C(red)%s%Creset %d\" --date=short
+    lol = log --all --graph --decorate --pretty=format:\"%C(yellow)%h%Creset %ad %C(green)%an %C(red)%s%Creset %d\" --date=format:\"%Y-%m-%d %H:%M\"
     diffc = diff --cached
+    diffw = diff --word-diff=color
+    dt = difftool -y
