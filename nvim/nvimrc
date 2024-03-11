@@ -12,8 +12,7 @@ filetype off
 " Plugins {{{
 call plug#begin('~/.config/nvim/plugged')
 
-" Molokai and Solarized colorscheme
-Plug 'tomasr/molokai'
+" Solarized colorscheme
 Plug 'altercation/vim-colors-solarized'
 
 " Quick navigation for files/folders in current folder
@@ -26,17 +25,20 @@ Plug 'SirVer/ultisnips'
 Plug 'ctrlpvim/ctrlp.vim'
 
 " Python mode plugin for better indention, autocomplete etc
-Plug 'klen/python-mode', {'branch': 'develop'}
+" Plug 'klen/python-mode', {'branch': 'develop'}
 
 " Sexy status bar like powerline with themes
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" Asynchronous maker and linter
-" Plug 'benekastah/neomake'
+" Nvim LSP
+Plug 'neovim/nvim-lspconfig'
 
-" Vimwiki for easy notes and todo lists
-Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+" FZF
+Plug 'junegunn/fzf.vim'
+
+" Vimwiki
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 " }}}
@@ -49,6 +51,8 @@ filetype plugin indent on
 set background=light
 " Set colorscheme to solarized
 colorscheme solarized
+
+highlight DiagnosticHint ctermfg=12
 " }}}
 
 " Mapping {{{
@@ -90,20 +94,19 @@ imap <Esc> <Esc>:nohl<cr>
 " Toggle colorschemes
 nnoremap <Leader>t :call ToggleDarkAndLightColorschema()<cr>
 
+" Replace Ctrl + n autocomplete with omnifunc
+inoremap <c-n> <c-x><c-o>
+
+" Use Ag for fzf.vim as fuzzy finder
+nnoremap <Leader>f :Ag<CR>
+
+" Open diagnostic window
+nnoremap <Leader>dl :lua vim.diagnostic.open_float()<cr>
+nnoremap <Leader>da :lua vim.diagnostic.open_float(0, { scope = 'buffer' })<cr>
+
 " }}}
 
 " Settings {{{
-" PyMode {{{
-" Turn off code folding from python-mode
-let g:pymode_folding = 0
-" Turn off python-mode breakpoints
-let g:pymode_breakpoint = 0
-" Turn off python-mode code checking
-let g:pymode_lint = 1
-let g:pymode_lint_ignore = ["E302", "E305"]
-" Turn off python-mode rope
-let g:pymode_rope = 0
-" }}}
 
 " NERDTree {{{
 " NERDTree should ignore Python binary files
@@ -147,28 +150,78 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 " }}}
 
-" Neomake {{{
-" autocmd! BufWritePost * Neomake
-let g:neomake_python_flake8_maker = {
-    \ 'args': ['--ignore=E302', '--max-line-length=85'],
-    \ }
-let g:neomake_cpp_gcc_maker = {
-    \ 'args': ['-I./includes/', '-std=c++11'],
-    \ }
-" }}}
-
 " Vimwiki {{{
-let g:vimwiki_customwiki2html = $HOME.'/.config/nvim/plugged/vimwiki/autoload/vimwiki/customwiki2html.sh'
 let private_wiki = {}
-let private_wiki.path = '~/vimwiki/source/'
-let private_wiki.path_html = '~/vimwiki/html/'
-let private_wiki.auto_export = 1
-let private_wiki.css_file = '~/vimwiki/templates/style.css'
-let private_wiki.template_path = '~/vimwiki/templates/'
-let private_wiki.template_default = 'default_template'
-let private_wiki.template_ext = '.html'
+let private_wiki.path = '~/Mega/Wiki/private/'
 
 let g:vimwiki_list = [private_wiki]
+
+" }}}
+
+" LSP {{{
+lua <<EOF
+local nvim_lsp = require('lspconfig')
+local opts = { noremap=true, silent=true }
+vim.keymap.set('n', '<Leader>df', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '<Leader>dn', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<Leader>db', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', '<Leader>dl', vim.diagnostic.setloclist, opts)
+local on_attach = function(client, bufnr)
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', '<Leader>gd', vim.lsp.buf.definition, opts)
+  vim.keymap.set('n', '<Leader>gD', vim.lsp.buf.declaration, opts)
+  vim.keymap.set('n', '<Leader>gi', vim.lsp.buf.implementation, opts)
+  vim.keymap.set('n', '<Leader>gr', vim.lsp.buf.references, opts)
+  vim.keymap.set('n', '<Leader>cn', vim.lsp.buf.rename, opts)
+  vim.keymap.set('n', '<Leader>h', vim.lsp.buf.hover, opts)
+
+  -- Set some keybinds conditional on server capabilities
+  if client.server_capabilities.document_formatting then
+    vim.keymap.set("n", "<Leader>F", vim.lsp.buf.formatting, opts)
+  end
+  if client.server_capabilities.document_range_formatting then
+    vim.keymap.set("v", "<Leader>F", vim.lsp.buf.range_formatting, opts)
+  end
+end
+
+nvim_lsp.pylsp.setup{
+    on_attach = on_attach,
+    settings = {
+        pylsp = {
+            plugins = {
+                pycodestyle = {
+                    ignore = {"E302", "E305", "W503"}
+                }
+            }
+        }
+    }
+}
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+nvim_lsp.html.setup{
+    on_attach = on_attach,
+    cmd = {"vscode-html-languageserver", "--stdio"},
+    filetypes = {"html", "htmldjango"},
+    capabilities = capabilities,
+}
+nvim_lsp.cssls.setup{
+    on_attach = on_attach,
+    cmd = {"vscode-css-languageserver", "--stdio"},
+    capabilities = capabilities,
+}
+nvim_lsp.jsonls.setup{
+    on_attach = on_attach,
+    cmd = {"vscode-json-languageserver", "--stdio"},
+    capabilities = capabilities,
+}
+nvim_lsp.rust_analyzer.setup{
+    on_attach = on_attach,
+}
+EOF
 " }}}
 
 " Relative numbering {{{
@@ -216,8 +269,11 @@ set autoread
 " Show options for command complete above
 set wildmenu
 
+" Show just a menu not a preview
+set completeopt=menu
+
 " Show vertical line on 85 column
-set colorcolumn=85
+set colorcolumn=80
 
 " Show incomplete command ("+y)
 set showcmd
@@ -274,6 +330,10 @@ set modelines=1
 " Use tags from .git directory
 set tags+=.git/tags
 set notagrelative
+" }}}
+
+" Extensions for syntax {{{
+au BufNewFile,BufRead *.html set filetype=htmldjango
 " }}}
 
 " Custom functions {{{
