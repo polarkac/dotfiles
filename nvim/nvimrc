@@ -24,6 +24,10 @@ Plug 'SirVer/ultisnips'
 " Fuzzy finder for files and buffers
 Plug 'ctrlpvim/ctrlp.vim'
 
+" Autocomplete
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+
 " Python mode plugin for better indention, autocomplete etc
 " Plug 'klen/python-mode', {'branch': 'develop'}
 
@@ -161,6 +165,7 @@ let g:vimwiki_list = [private_wiki]
 " LSP {{{
 lua <<EOF
 local nvim_lsp = require('lspconfig')
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<Leader>df', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '<Leader>dn', vim.diagnostic.goto_next, opts)
@@ -189,6 +194,7 @@ end
 
 nvim_lsp.pylsp.setup{
     on_attach = on_attach,
+    capabilities = capabilities,
     settings = {
         pylsp = {
             plugins = {
@@ -204,22 +210,53 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 nvim_lsp.html.setup{
     on_attach = on_attach,
+    capabilities = capabilities,
     cmd = {"vscode-html-languageserver", "--stdio"},
     filetypes = {"html", "htmldjango"},
     capabilities = capabilities,
 }
 nvim_lsp.cssls.setup{
     on_attach = on_attach,
+    capabilities = capabilities,
     cmd = {"vscode-css-languageserver", "--stdio"},
     capabilities = capabilities,
 }
 nvim_lsp.jsonls.setup{
     on_attach = on_attach,
+    capabilities = capabilities,
     cmd = {"vscode-json-languageserver", "--stdio"},
     capabilities = capabilities,
 }
 nvim_lsp.rust_analyzer.setup{
     on_attach = on_attach,
+    capabilities = capabilities,
+}
+EOF
+" }}}
+
+" Nvim-cmp {{{
+lua <<EOF
+local cmp = require('cmp')
+cmp.setup{
+    snippet = {
+        expand = function(args)
+            vim.fn["UltiSnips#Anon"](args.body)
+        end
+    },
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-d>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    }),
+    sources = {
+        { name = 'nvim_lsp' },
+        { name = 'ultisnips' },
+    },
 }
 EOF
 " }}}
