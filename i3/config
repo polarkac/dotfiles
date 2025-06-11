@@ -15,7 +15,7 @@ set $mod Mod4
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Hack 10
+font pango:Hack 11
 #font pango:DejaVu Sans Mono 8
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -90,72 +90,62 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
+# Workspace names
+set $w1 "1: Main"
+set $w2 "2: Dev 1"
+set $w3 "3: Dev 2"
+set $w4 "4: Other 1"
+set $w5 "5: Other 2"
+set $w6 "6: Other 3"
+
+set $ws1 "1: Chats"
+set $ws2 "2: IM"
+set $ws3 "3: E-mail"
+set $ws4 "4: Dev 1"
+set $ws5 "5: Dev 2"
+set $ws6 "6: Dev 3"
+
 # switch to workspace
-bindsym $mod+1 workspace "1.1"
-bindsym $mod+2 workspace "2.1"
-bindsym $mod+3 workspace "3.1"
-bindsym $mod+4 workspace "4.1"
-bindsym $mod+5 workspace "5.1"
-bindsym $mod+6 workspace "6.1"
-bindsym $mod+7 workspace "7.1"
-bindsym $mod+8 workspace "8.1"
-bindsym $mod+9 workspace "9.1"
-bindsym $mod+0 workspace "10.1"
-workspace "1.1" output DVI-D-2
-workspace "2.1" output DVI-D-2
-workspace "3.1" output DVI-D-2
-workspace "4.1" output DVI-D-2
-workspace "5.1" output DVI-D-2
-workspace "6.1" output DVI-D-2
-workspace "7.1" output DVI-D-2
-workspace "8.1" output DVI-D-2
-workspace "9.1" output DVI-D-2
-workspace "10.1" output DVI-D-2
+bindsym $mod+1 workspace $w1
+bindsym $mod+2 workspace $w2
+bindsym $mod+3 workspace $w3
+bindsym $mod+4 workspace $w4
+bindsym $mod+5 workspace $w5
+bindsym $mod+6 workspace $w6
+workspace $w1 output DP-3
+workspace $w2 output DP-3
+workspace $w3 output DP-3
+workspace $w4 output DP-3
+workspace $w5 output DP-3
+workspace $w6 output DP-3
 
-
-bindsym $mod+F1 workspace "1.2"
-bindsym $mod+F2 workspace "2.2"
-bindsym $mod+F3 workspace "3.2"
-bindsym $mod+F4 workspace "4.2"
-bindsym $mod+F5 workspace "5.2"
-bindsym $mod+F6 workspace "6.2"
-bindsym $mod+F7 workspace "7.2"
-bindsym $mod+F8 workspace "8.2"
-bindsym $mod+F9 workspace "9.2"
-bindsym $mod+F0 workspace "10.2"
-workspace "1.2" output HDMI-1
-workspace "2.2" output HDMI-1
-workspace "3.2" output HDMI-1
-workspace "4.2" output HDMI-1
-workspace "5.2" output HDMI-1
-workspace "6.2" output HDMI-1
-workspace "7.2" output HDMI-1
-workspace "8.2" output HDMI-1
-workspace "9.2" output HDMI-1
-workspace "10.2" output HDMI-1
+bindsym $mod+F1 workspace $ws1
+bindsym $mod+F2 workspace $ws2
+bindsym $mod+F3 workspace $ws3
+bindsym $mod+F4 workspace $ws4
+bindsym $mod+F5 workspace $ws5
+bindsym $mod+F6 workspace $ws6
+workspace $ws1 output DP-1
+workspace $ws2 output DP-1
+workspace $ws3 output DP-1
+workspace $ws4 output DP-1
+workspace $ws5 output DP-1
+workspace $ws6 output DP-1
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace "1.1"
-bindsym $mod+Shift+2 move container to workspace "2.1"
-bindsym $mod+Shift+3 move container to workspace "3.1"
-bindsym $mod+Shift+4 move container to workspace "4.1"
-bindsym $mod+Shift+5 move container to workspace "5.1"
-bindsym $mod+Shift+6 move container to workspace "6.1"
-bindsym $mod+Shift+7 move container to workspace "7.1"
-bindsym $mod+Shift+8 move container to workspace "8.1"
-bindsym $mod+Shift+9 move container to workspace "9.1"
-bindsym $mod+Shift+0 move container to workspace "10.1"
+bindsym $mod+Shift+1 move container to workspace $w1
+bindsym $mod+Shift+2 move container to workspace $w2
+bindsym $mod+Shift+3 move container to workspace $w3
+bindsym $mod+Shift+4 move container to workspace $w4
+bindsym $mod+Shift+5 move container to workspace $w5
+bindsym $mod+Shift+6 move container to workspace $w6
 
-bindsym $mod+Shift+F1 move container to workspace "1.2"
-bindsym $mod+Shift+F2 move container to workspace "2.2"
-bindsym $mod+Shift+F3 move container to workspace "3.2"
-bindsym $mod+Shift+F4 move container to workspace "4.2"
-bindsym $mod+Shift+F5 move container to workspace "5.2"
-bindsym $mod+Shift+F6 move container to workspace "6.2"
-bindsym $mod+Shift+F7 move container to workspace "7.2"
-bindsym $mod+Shift+F8 move container to workspace "8.2"
-bindsym $mod+Shift+F9 move container to workspace "9.2"
-bindsym $mod+Shift+F0 move container to workspace "10.2"
+bindsym $mod+Shift+F1 move container to workspace $ws1
+bindsym $mod+Shift+F2 move container to workspace $ws2
+bindsym $mod+Shift+F3 move container to workspace $ws3
+bindsym $mod+Shift+F4 move container to workspace $ws4
+bindsym $mod+Shift+F5 move container to workspace $ws5
+bindsym $mod+Shift+F6 move container to workspace $ws6
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -194,29 +184,54 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command py3status
-        tray_output HDMI-1
+        tray_output DP-1
+        padding 0 16px
+        colors {
+            background #fdf6e3
+            statusline #000000
+            focused_workspace #586e75 #eee8d5 #000000
+            active_workspace #586e75 #eee8d5 #000000
+            inactive_workspace #eee8d5 #586e75 #fdf6e3
+        }
 }
+
+title_align center
+gaps inner 8px
+gaps outer 0px
+smart_gaps on
+hide_edge_borders both
+
+# Colors
+client.focused #586e75 #fdf6e3 #000000 #586e75 #586e75
+client.focused_inactive #586e75 #93a1a1 #000000 #586e75 #586e75
+client.unfocused #586e75 #586e75 #ffffff #586e75 #586e75
+
+# Apps
+assign [class="keepassxc"] $ws1
+assign [class="chatty-Chatty"] $ws1
+assign [class="telegram-desktop"] $ws2
+assign [class="discord"] $ws2
+assign [class="thunderbird"] $ws3
 
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 bindsym $mod+x exec i3lock-fancy
 bindsym $mod+m exec "pactl set-sink-mute alsa_output.pci-0000_00_1f.3.analog-stereo toggle"
-bindsym $mod+b exec "dbus-send --session --print-reply --dest=org.freedesktop.Notifications /org/freedesktop/Notifications org.freedesktop.Notifications.ShowNotifications"
+bindsym $mod+g exec --no-startup-id "polutils date --copy"
+bindsym $mod+b exec --no-startup-id "polutils rand 32 --copy"
+bindsym Print exec --no-startup-id "scrot -a 1920,0,1920,1080 && notify-send 'Scrot' 'Screenshot captured'"
 
 for_window [title="scratchpad"] move scratchpad
 for_window [class="Steam"] floating enable
 mouse_warping none
 
-exec redshift-gtk
+exec dunst
 exec nitrogen --restore
 exec megasync
 exec dropbox
-exec i3-notifier
-exec rclone mount --daemon "Google Drive":/ Development/internetove_poradenstvi/gdrive/
 exec create_scratchpad
 exec keepassxc
-exec firefox
+exec librewolf
 exec discord
 exec telegram-desktop
-exec chatty
 exec thunderbird
