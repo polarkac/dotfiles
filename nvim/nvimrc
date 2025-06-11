@@ -160,7 +160,7 @@ let g:vimwiki_list = [notes_wiki]
 
 " LSP {{{
 lua <<EOF
-local nvim_lsp = require('lspconfig')
+vim.diagnostic.config({ virtual_text = true })
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<Leader>df', vim.diagnostic.open_float, opts)
@@ -168,27 +168,19 @@ vim.keymap.set('n', '<Leader>dn', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<Leader>dp', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', '<Leader>dl', vim.diagnostic.setloclist, opts)
 local on_attach = function(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  local opts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', '<Leader>gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', '<Leader>gD', vim.lsp.buf.declaration, opts)
-  vim.keymap.set('n', '<Leader>gi', vim.lsp.buf.implementation, opts)
-  vim.keymap.set('n', '<Leader>gr', vim.lsp.buf.references, opts)
-  vim.keymap.set('n', '<Leader>cn', vim.lsp.buf.rename, opts)
-  vim.keymap.set('n', '<Leader>h', vim.lsp.buf.hover, opts)
-
-  -- Set some keybinds conditional on server capabilities
-  if client.server_capabilities.document_formatting then
-    vim.keymap.set("n", "<Leader>F", vim.lsp.buf.formatting, opts)
-  end
-  if client.server_capabilities.document_range_formatting then
-    vim.keymap.set("v", "<Leader>F", vim.lsp.buf.range_formatting, opts)
-  end
+    -- Mappings.
+    local opts = { noremap=true, silent=true, buffer=bufnr }
+    vim.keymap.set('n', '<Leader>gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', '<Leader>gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', '<Leader>gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', '<Leader>gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<Leader>cc', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<Leader>h', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', '<Leader>ff', vim.lsp.buf.format, opts)
 end
 
-nvim_lsp.pylsp.setup{
+vim.lsp.enable('pylsp')
+vim.lsp.config('pylsp', {
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
@@ -200,33 +192,48 @@ nvim_lsp.pylsp.setup{
             }
         }
     }
-}
+})
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-nvim_lsp.html.setup{
+vim.lsp.enable('html')
+vim.lsp.config('html', {
     on_attach = on_attach,
     capabilities = capabilities,
     cmd = {"vscode-html-languageserver", "--stdio"},
     filetypes = {"html", "htmldjango"},
-    capabilities = capabilities,
-}
-nvim_lsp.cssls.setup{
+})
+
+vim.lsp.enable('cssls')
+vim.lsp.config('cssls', {
     on_attach = on_attach,
     capabilities = capabilities,
     cmd = {"vscode-css-languageserver", "--stdio"},
-    capabilities = capabilities,
-}
-nvim_lsp.jsonls.setup{
+})
+
+vim.lsp.enable('jsonls')
+vim.lsp.config('jsonls', {
     on_attach = on_attach,
     capabilities = capabilities,
     cmd = {"vscode-json-languageserver", "--stdio"},
-    capabilities = capabilities,
-}
-nvim_lsp.rust_analyzer.setup{
+})
+
+vim.lsp.enable('rust_analyzer')
+vim.lsp.config('rust_analyzer', {
     on_attach = on_attach,
     capabilities = capabilities,
-}
+    settings = {
+        ["rust-analyzer"] = {
+            diagnostics = {
+                enable = false;
+            },
+            imports = {
+                granularity = {
+                    group = "crate",
+                },
+                prefix = "crate",
+            },
+        }
+    }
+})
 EOF
 " }}}
 
