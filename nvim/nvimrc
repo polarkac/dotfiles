@@ -95,9 +95,6 @@ tnoremap <esc><esc> <c-\><c-n>
 nnoremap <Esc> :nohl<cr>
 imap <Esc> <Esc>:nohl<cr>
 
-" Toggle colorschemes
-nnoremap <Leader>t :call ToggleDarkAndLightColorschema()<cr>
-
 " Replace Ctrl + n autocomplete with omnifunc
 inoremap <c-n> <c-x><c-o>
 
@@ -374,13 +371,6 @@ au BufNewFile,BufRead *.html set filetype=htmldjango
 " }}}
 
 " Custom functions {{{
-function! ToggleDarkAndLightColorschema()
-    if &background == 'light'
-        set background=dark
-    else
-        set background=light
-    endif
-endfunction
 " }}}
 
 " }}}
