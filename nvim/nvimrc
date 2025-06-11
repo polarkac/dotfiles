@@ -268,10 +268,13 @@ EOF
 " Set relative numbers with current line number on cursor line
 set relativenumber
 set number
+
 " Switch to absolute numbers in Insert mode
 autocmd InsertEnter * set number norelativenumber
+
 " Switch back to relative numbers in Normal mode
 autocmd InsertLeave * set number relativenumber
+
 " }}}
 
 " Persistent undo {{{
@@ -312,7 +315,7 @@ set wildmenu
 " Show just a menu not a preview
 set completeopt=menu
 
-" Show vertical line on 85 column
+" Show vertical line on 80 column
 set colorcolumn=80
 
 " Show incomplete command ("+y)
