@@ -1,0 +1,4 @@
+[mgr]
+ratio = [2, 4, 2]
+sort_by = "natural"
+mouse_events = []

@@ -1,0 +1,7 @@
+[[plugin.deps]]
+use = "KKV9/command"
+rev = "95a29be"
+hash = "65fff40a0060fe4b1c42d49d29f770fd"
+
+[flavor]
+deps = []
