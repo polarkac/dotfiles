@@ -152,11 +152,10 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 " }}}
 
 " Vimwiki {{{
-let private_wiki = {}
-let private_wiki.path = '~/Mega/Wiki/private/'
+let notes_wiki = {}
+let notes_wiki.path = '~/Mega/Wiki/notes/'
 
-let g:vimwiki_list = [private_wiki]
-
+let g:vimwiki_list = [notes_wiki]
 " }}}
 
 " LSP {{{
