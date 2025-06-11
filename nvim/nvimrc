@@ -13,7 +13,7 @@ filetype off
 call plug#begin('~/.config/nvim/plugged')
 
 " Solarized colorscheme
-Plug 'altercation/vim-colors-solarized'
+Plug 'shaunsingh/solarized.nvim'
 
 " Quick navigation for files/folders in current folder
 Plug 'scrooloose/nerdtree'
